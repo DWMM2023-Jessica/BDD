@@ -1,0 +1,44 @@
+# script créé le : Tue Aug 29 14:27:16 CEST 2023 -   syntaxe MySQL ;
+
+# use  VOTRE_BASE_DE_DONNEE ;
+
+DROP TABLE IF EXISTS admin ;
+CREATE TABLE admin (id_admin int AUTO_INCREMENT NOT NULL,
+nom_admin VARCHAR(100),
+prenom_admin VARCHAR(100),
+email_admin VARCHAR(100),
+mdp_admin VARCHAR(100),
+role BOOL,
+PRIMARY KEY (id_admin) ) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS collab ;
+CREATE TABLE collab (id_style int AUTO_INCREMENT NOT NULL,
+nom_collab VARCHAR(100),
+logo_collab VARCHAR(300),
+id_collab INT NOT NULL,
+PRIMARY KEY (id_style) ) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS chantier ;
+CREATE TABLE chantier (id_chantier int AUTO_INCREMENT NOT NULL,
+nom_chantier VARCHAR(100),
+photo_av_chantier VARCHAR(300),
+photo_ap_chantier VARCHAR(300),
+description_chantier VARCHAR(150),
+position_chantier INT,
+id_travaux INT NOT NULL,
+PRIMARY KEY (id_chantier) ) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS style_collab ;
+CREATE TABLE style_collab (id_collab int AUTO_INCREMENT NOT NULL,
+type_collab VARCHAR(100),
+visibilite BOOL,
+PRIMARY KEY (id_collab) ) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS travaux ;
+CREATE TABLE travaux (id_travaux int AUTO_INCREMENT NOT NULL,
+type_travaux VARCHAR(100),
+PRIMARY KEY (id_travaux) ) ENGINE=InnoDB;
+
+ALTER TABLE collab ADD CONSTRAINT FK_collab_id_collab FOREIGN KEY (id_collab) REFERENCES style_collab (id_collab);
+
+ALTER TABLE chantier ADD CONSTRAINT FK_chantier_id_travaux FOREIGN KEY (id_travaux) REFERENCES travaux (id_travaux);
